@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sov Tools: private, free tools for makers and freelancers</title>
+<meta name="description" content="Make cross-stitch patterns, bead patterns, invoices and resumes in your browser. Your files are processed in memory and never saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧵</text></svg>">
+<style>
+:root{--bg:#fafaf8;--card:#fff;--ink:#1b1b1f;--mute:#5d5d66;--line:#e4e4df;--acc:#2f5bea;--acc-ink:#fff}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme:dark){:root{--bg:#121214;--card:#1b1b1f;--ink:#f1f1f3;--mute:#a4a4ae;--line:#2c2c33;--acc:#7b9bff;--acc-ink:#0b0b10}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+nav b{font-size:18px}nav a{color:var(--mute);text-decoration:none;margin-left:18px;font-size:14px}
+.hero{padding:56px 0 36px;text-align:center}
+.hero h1{font-size:clamp(32px,6vw,56px);line-height:1.1;margin:0 0 16px;letter-spacing:-.02em}
+.hero p{max-width:620px;margin:0 auto 26px;color:var(--mute);font-size:18px}
+.btn{display:inline-block;background:var(--acc);color:var(--acc-ink);padding:12px 22px;border-radius:10px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:15px}
+.btn.off{opacity:.45;pointer-events:none}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:13px;color:var(--mute);margin:4px 3px}
+h2{font-size:28px;margin:56px 0 8px;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column}
+.card .ico{font-size:34px}.card h3{margin:10px 0 6px;font-size:19px}
+.card p{color:var(--mute);margin:0 0 14px;font-size:15px;flex:1}
+.card ul{margin:0 0 16px;padding-left:18px;color:var(--mute);font-size:14px}
+.steps{counter-reset:s}.steps .card::before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--acc);color:var(--acc-ink);font-weight:700;margin-bottom:10px}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:10px 0}
+summary{cursor:pointer;font-weight:600}details p{color:var(--mute);margin:10px 0 0}
+footer{margin:64px 0 30px;padding-top:22px;border-top:1px solid var(--line);color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><b>🧵 Sov Tools</b><div><a href="#tools">Tools</a><a href="#how">How it works</a><a href="#faq">FAQ</a></div></nav>
+
+  <header class="hero">
+    <h1>Useful tools that keep your files <span style="color:var(--acc)">yours</span>.</h1>
+    <p>Turn photos into stitch and bead patterns, or create invoices and resumes as clean PDFs. Your files are processed in memory and never saved.</p>
+    <a class="btn" href="#tools">Choose a tool</a>
+    <div style="margin-top:22px">
+      <span class="pill">No sign-up</span><span class="pill">Nothing stored on the server</span><span class="pill">Free to try</span><span class="pill">Works on phone and desktop</span>
+    </div>
+  </header>
+
+  <section id="tools">
+    <h2>Pick a tool</h2>
+    <p class="sub">Each one opens in your browser and gives you a PDF to download.</p>
+    <div class="grid">
+      <article class="card">
+        <div class="ico">🧶</div><h3>Cross-Stitch Pattern Maker</h3>
+        <p>Upload any image and get a printable chart with symbols, thread colors and stitch counts.</p>
+        <ul><li>DMC thread color matching</li><li>Fabric size and skein estimate</li><li>Gridded, multi-page charts</li></ul>
+        <a class="btn" data-tool="stitch" href="#">Open tool</a>
+      </article>
+      <article class="card">
+        <div class="ico">🟣</div><h3>Bead Pattern Maker</h3>
+        <p>Make Perler, Hama or Artkal style patterns from a photo or pixel art, with pegboard pages.</p>
+        <ul><li>Background removal</li><li>Bead counts per color</li><li>29×29 pegboard pages</li></ul>
+        <a class="btn" data-tool="bead" href="#">Open tool</a>
+      </article>
+      <article class="card">
+        <div class="ico">🧾</div><h3>Invoice Generator</h3>
+        <p>Create a professional invoice in a minute, with your logo, taxes, discounts and payment details.</p>
+        <ul><li>Live totals as you type</li><li>10 currencies</li><li>Remembers your business details</li></ul>
+        <a class="btn" data-tool="invoice" href="#">Open tool</a>
+      </article>
+      <article class="card">
+        <div class="ico">📄</div><h3>Resume Builder</h3>
+        <p>Build a resume that applicant tracking systems can read, in three clean templates.</p>
+        <ul><li>Modern, Classic and Sidebar designs</li><li>Optional photo</li><li>Backup and restore your data</li></ul>
+        <a class="btn" data-tool="resume" href="#">Open tool</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="sub">Three steps, no account.</p>
+    <div class="grid steps">
+      <div class="card"><h3>Add your input</h3><p>Upload an image or fill in a short form.</p></div>
+      <div class="card"><h3>Adjust the settings</h3><p>Pick size, colors, template or currency to suit you.</p></div>
+      <div class="card"><h3>Download the PDF</h3><p>Print it, share it or keep it. We don&rsquo;t keep a copy.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why &ldquo;sovereign&rdquo;?</h2>
+    <p class="sub">These tools do their work on their own server, so your data isn&rsquo;t passed around.</p>
+    <div class="grid">
+      <div class="card"><h3>No third-party APIs</h3><p>Your images and details are never sent to outside services to be processed.</p></div>
+      <div class="card"><h3>Processed in memory</h3><p>Files are turned into a PDF and discarded. There is no database of your uploads.</p></div>
+      <div class="card"><h3>Your data stays with you</h3><p>Saved details, like your business name or resume, live in your own browser only.</p></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>Questions</h2>
+    <details><summary>Is it really free?</summary><p>You can try every tool for free. Premium options, such as removing the footer or watermark and saving history, may be added later.</p></details>
+    <details><summary>Do you keep my images or resume?</summary><p>No. Uploads are processed in memory to make your PDF and are not saved on the server. Anything you choose to save, like your resume draft, stays in your own browser.</p></details>
+    <details><summary>Are the thread and bead colors exact?</summary><p>They are close matches, not an exact chart for every brand. Compare with your own threads or beads before you start a big project.</p></details>
+    <details><summary>Will employers&rsquo; systems read my resume?</summary><p>The PDF uses real, selectable text and a simple layout, which is what applicant tracking systems generally need.</p></details>
+  </section>
+
+  <footer>
+    <span>&copy; <span id="y"></span> Sov Tools</span>
+    <span><a href="mailto:you@example.com" style="color:inherit">Contact</a></span>
+  </footer>
+</div>
+
+<script>
+// 1) After you deploy each tool on Replit, paste its public URL here.
+const TOOLS = {
+  stitch:  "https://YOUR-STITCH-REPL.replit.app",
+  bead:    "https://YOUR-BEAD-REPL.replit.app",
+  invoice: "https://YOUR-INVOICE-REPL.replit.app",
+  resume:  "https://YOUR-RESUME-REPL.replit.app"
+};
+document.querySelectorAll("[data-tool]").forEach(function (a) {
+  var url = TOOLS[a.dataset.tool];
+  if (!url || url.indexOf("YOUR-") !== -1) { a.textContent = "Coming soon"; a.classList.add("off"); }
+  else { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
+});
+document.getElementById("y").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
