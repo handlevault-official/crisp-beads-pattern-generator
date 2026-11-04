@@ -42,3 +42,5 @@ if r:
              caption=f"{W} x {H} beads, {sum(l['count'] for l in legend)} beads in {len(legend)} colors")
     st.dataframe([{"Symbol": l["sym"], "Color": l["name"], "Beads": l["count"]} for l in legend], hide_index=True)
     st.download_button("Download PDF", r["pdf"], "bead-pattern.pdf", "application/pdf", type="primary")
+st.divider()
+st.link_button("☕ Support this tool", "https://ko-fi.com/handlevaultofficial")
