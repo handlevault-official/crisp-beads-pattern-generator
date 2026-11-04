@@ -44,3 +44,5 @@ if r:
     st.download_button("Download PDF", r["pdf"], "bead-pattern.pdf", "application/pdf", type="primary")
 st.divider()
 st.link_button("☕ Support this tool", "https://ko-fi.com/handlevaultofficial")
+st.divider()
+st.link_button("☕ Support this tool", "https://ko-fi.com/yourname", type="primary")
