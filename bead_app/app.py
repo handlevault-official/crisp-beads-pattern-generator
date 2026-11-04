@@ -43,6 +43,5 @@ if r:
     st.dataframe([{"Symbol": l["sym"], "Color": l["name"], "Beads": l["count"]} for l in legend], hide_index=True)
     st.download_button("Download PDF", r["pdf"], "bead-pattern.pdf", "application/pdf", type="primary")
 st.divider()
-st.link_button("☕ Support this tool", "https://ko-fi.com/handlevaultofficial")
-st.divider()
 st.link_button("☕ Support this tool", "https://ko-fi.com/handlevaultofficial", type="primary")
+st.divider()
