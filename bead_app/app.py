@@ -45,4 +45,4 @@ if r:
 st.divider()
 st.link_button("☕ Support this tool", "https://ko-fi.com/handlevaultofficial")
 st.divider()
-st.link_button("☕ Support this tool", "https://ko-fi.com/yourname", type="primary")
+st.link_button("☕ Support this tool", "https://ko-fi.com/handlevaultofficial", type="primary")
