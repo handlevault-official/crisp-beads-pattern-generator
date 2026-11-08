@@ -1,1 +1,1 @@
-git remote -v
+cd path/to/beads-repo
