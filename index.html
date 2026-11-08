@@ -1,132 +1,291 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sov Tools: private, free tools for makers and freelancers</title>
-<meta name="description" content="Make cross-stitch patterns, bead patterns, invoices and resumes in your browser. Your files are processed in memory and never saved.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧵</text></svg>">
-<style>
-:root{--bg:#fafaf8;--card:#fff;--ink:#1b1b1f;--mute:#5d5d66;--line:#e4e4df;--acc:#2f5bea;--acc-ink:#fff}
-:root:not([data-theme="light"]){}
-@media (prefers-color-scheme:dark){:root{--bg:#121214;--card:#1b1b1f;--ink:#f1f1f3;--mute:#a4a4ae;--line:#2c2c33;--acc:#7b9bff;--acc-ink:#0b0b10}}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
-nav b{font-size:18px}nav a{color:var(--mute);text-decoration:none;margin-left:18px;font-size:14px}
-.hero{padding:56px 0 36px;text-align:center}
-.hero h1{font-size:clamp(32px,6vw,56px);line-height:1.1;margin:0 0 16px;letter-spacing:-.02em}
-.hero p{max-width:620px;margin:0 auto 26px;color:var(--mute);font-size:18px}
-.btn{display:inline-block;background:var(--acc);color:var(--acc-ink);padding:12px 22px;border-radius:10px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:15px}
-.btn.off{opacity:.45;pointer-events:none}
-.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:13px;color:var(--mute);margin:4px 3px}
-h2{font-size:28px;margin:56px 0 8px;letter-spacing:-.01em}
-.sub{color:var(--mute);margin:0 0 22px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column}
-.card .ico{font-size:34px}.card h3{margin:10px 0 6px;font-size:19px}
-.card p{color:var(--mute);margin:0 0 14px;font-size:15px;flex:1}
-.card ul{margin:0 0 16px;padding-left:18px;color:var(--mute);font-size:14px}
-.steps{counter-reset:s}.steps .card::before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--acc);color:var(--acc-ink);font-weight:700;margin-bottom:10px}
-details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:10px 0}
-summary{cursor:pointer;font-weight:600}details p{color:var(--mute);margin:10px 0 0}
-footer{margin:64px 0 30px;padding-top:22px;border-top:1px solid var(--line);color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisp Beads Pattern Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a1a24;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        header h1 {
+            color: #ff477e;
+            font-size: 20px;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px #4895ef;
+        }
+
+        header p {
+            color: #b5e2fa;
+            font-size: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            flex: 1 1 280px;
+            background: #242438;
+            border: 2px solid #ff477e;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .main-canvas {
+            flex: 2 1 500px;
+            background: #242438;
+            border: 2px solid #4895ef;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: #ffdd00;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #ff477e;
+            padding-bottom: 8px;
+        }
+
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .color-swatch {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #1a1a24;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            transition: transform 0.1s ease;
+        }
+
+        .color-swatch:hover, .color-swatch.selected {
+            transform: scale(1.2);
+            border-color: #ffffff;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background: #ff477e;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #ff1053;
+        }
+
+        .btn-blue {
+            background: #4895ef;
+        }
+
+        .btn-blue:hover {
+            background: #3f37c9;
+        }
+
+        #gridCanvas {
+            background: #111;
+            border: 2px solid #ffffff;
+            cursor: crosshair;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .controls {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 6px;
+            border: none;
+            background: #1a1a24;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<div class="wrap">
-  <nav><b>🧵 Sov Tools</b><div><a href="#tools">Tools</a><a href="#how">How it works</a><a href="#faq">FAQ</a></div></nav>
 
-  <header class="hero">
-    <h1>Useful tools that keep your files <span style="color:var(--acc)">yours</span>.</h1>
-    <p>Turn photos into stitch and bead patterns, or create invoices and resumes as clean PDFs. Your files are processed in memory and never saved.</p>
-    <a class="btn" href="#tools">Choose a tool</a>
-    <div style="margin-top:22px">
-      <span class="pill">No sign-up</span><span class="pill">Nothing stored on the server</span><span class="pill">Free to try</span><span class="pill">Works on phone and desktop</span>
+    <header>
+        <h1>CRISP BEADS PATTERN GENERATOR</h1>
+        <p>Design Perler & Hama Bead Patterns Easily!</p>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar: Palette & Controls -->
+        <div class="sidebar">
+            <h2>COLOR PALETTE</h2>
+            <div class="palette" id="palette"></div>
+
+            <h2>GRID SIZE</h2>
+            <div class="controls">
+                <label for="gridSelect">Canvas Size:</label>
+                <select id="gridSelect">
+                    <option value="16">16 x 16 Pegboard</option>
+                    <option value="29" selected>29 x 29 Standard</option>
+                    <option value="32">32 x 32 Large</option>
+                </select>
+            </div>
+
+            <button class="btn" id="clearBtn">Clear Canvas</button>
+
+            <h2>STORE & SUPPORT</h2>
+            <a href="https://ko-fi.com/handlevault" target="_blank" class="btn btn-blue">Sponsor on Ko-fi</a>
+        </div>
+
+        <!-- Main Studio Area -->
+        <div class="main-canvas">
+            <h2>BEAD PEGBOARD CANVAS</h2>
+            <p style="font-size: 12px; color: #aaa; margin-bottom: 10px;">Click or drag on the pegboard to place beads!</p>
+            <canvas id="gridCanvas" width="464" height="464"></canvas>
+            <button class="btn btn-blue" id="downloadBtn" style="margin-top: 15px; max-width: 300px;">Download Pattern PNG</button>
+        </div>
     </div>
-  </header>
 
-  <section id="tools">
-    <h2>Pick a tool</h2>
-    <p class="sub">Each one opens in your browser and gives you a PDF to download.</p>
-    <div class="grid">
-      <article class="card">
-        <div class="ico">🧶</div><h3>Cross-Stitch Pattern Maker</h3>
-        <p>Upload any image and get a printable chart with symbols, thread colors and stitch counts.</p>
-        <ul><li>DMC thread color matching</li><li>Fabric size and skein estimate</li><li>Gridded, multi-page charts</li></ul>
-        <a class="btn" data-tool="stitch" href="#">Open tool</a>
-      </article>
-      <article class="card">
-        <div class="ico">🟣</div><h3>Bead Pattern Maker</h3>
-        <p>Make Perler, Hama or Artkal style patterns from a photo or pixel art, with pegboard pages.</p>
-        <ul><li>Background removal</li><li>Bead counts per color</li><li>29×29 pegboard pages</li></ul>
-        <a class="btn" data-tool="bead" href="#">Open tool</a>
-      </article>
-      <article class="card">
-        <div class="ico">🧾</div><h3>Invoice Generator</h3>
-        <p>Create a professional invoice in a minute, with your logo, taxes, discounts and payment details.</p>
-        <ul><li>Live totals as you type</li><li>10 currencies</li><li>Remembers your business details</li></ul>
-        <a class="btn" data-tool="invoice" href="#">Open tool</a>
-      </article>
-      <article class="card">
-        <div class="ico">📄</div><h3>Resume Builder</h3>
-        <p>Build a resume that applicant tracking systems can read, in three clean templates.</p>
-        <ul><li>Modern, Classic and Sidebar designs</li><li>Optional photo</li><li>Backup and restore your data</li></ul>
-        <a class="btn" data-tool="resume" href="#">Open tool</a>
-      </article>
-    </div>
-  </section>
+    <script>
+        const canvas = document.getElementById('gridCanvas');
+        const ctx = canvas.getContext('2d');
+        const paletteContainer = document.getElementById('palette');
+        const gridSelect = document.getElementById('gridSelect');
+        const clearBtn = document.getElementById('clearBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
 
-  <section id="how">
-    <h2>How it works</h2>
-    <p class="sub">Three steps, no account.</p>
-    <div class="grid steps">
-      <div class="card"><h3>Add your input</h3><p>Upload an image or fill in a short form.</p></div>
-      <div class="card"><h3>Adjust the settings</h3><p>Pick size, colors, template or currency to suit you.</p></div>
-      <div class="card"><h3>Download the PDF</h3><p>Print it, share it or keep it. We don&rsquo;t keep a copy.</p></div>
-    </div>
-  </section>
+        let gridSize = parseInt(gridSelect.value);
+        let cellSize = canvas.width / gridSize;
+        let selectedColor = '#ff477e';
+        let isDrawing = false;
 
-  <section>
-    <h2>Why &ldquo;sovereign&rdquo;?</h2>
-    <p class="sub">These tools do their work on their own server, so your data isn&rsquo;t passed around.</p>
-    <div class="grid">
-      <div class="card"><h3>No third-party APIs</h3><p>Your images and details are never sent to outside services to be processed.</p></div>
-      <div class="card"><h3>Processed in memory</h3><p>Files are turned into a PDF and discarded. There is no database of your uploads.</p></div>
-      <div class="card"><h3>Your data stays with you</h3><p>Saved details, like your business name or resume, live in your own browser only.</p></div>
-    </div>
-  </section>
+        // Common Perler Bead Colors
+        const beadColors = [
+            '#ff477e', '#ff1053', '#ff9f1c', '#ffbf00', '#2ec4b6',
+            '#4895ef', '#7209b7', '#4cc9f0', '#ffffff', '#000000',
+            '#8d99ae', '#d90429', '#ffb703', '#fb8500', '#06d6a0'
+        ];
 
-  <section id="faq">
-    <h2>Questions</h2>
-    <details><summary>Is it really free?</summary><p>You can try every tool for free. Premium options, such as removing the footer or watermark and saving history, may be added later.</p></details>
-    <details><summary>Do you keep my images or resume?</summary><p>No. Uploads are processed in memory to make your PDF and are not saved on the server. Anything you choose to save, like your resume draft, stays in your own browser.</p></details>
-    <details><summary>Are the thread and bead colors exact?</summary><p>They are close matches, not an exact chart for every brand. Compare with your own threads or beads before you start a big project.</p></details>
-    <details><summary>Will employers&rsquo; systems read my resume?</summary><p>The PDF uses real, selectable text and a simple layout, which is what applicant tracking systems generally need.</p></details>
-  </section>
+        // Initialize Palette
+        beadColors.forEach((color, index) => {
+            const swatch = document.createElement('div');
+            swatch.className = 'color-swatch' + (index === 0 ? ' selected' : '');
+            swatch.style.backgroundColor = color;
+            swatch.addEventListener('click', () => {
+                document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+                swatch.classList.add('selected');
+                selectedColor = color;
+            });
+            paletteContainer.appendChild(swatch);
+        });
 
-  <footer>
-    <span>&copy; <span id="y"></span> Sov Tools</span>
-    <span><a href="mailto:you@example.com" style="color:inherit">Contact</a></span>
-  </footer>
-</div>
+        // Grid Array
+        let grid = Array(gridSize).fill().map(() => Array(gridSize).fill('#111111'));
 
-<script>
-// 1) After you deploy each tool on Replit, paste its public URL here.
-const TOOLS = {
-  stitch:  "https://YOUR-STITCH-REPL.replit.app",
-  bead:    "https://YOUR-BEAD-REPL.replit.app",
-  invoice: "https://YOUR-INVOICE-REPL.replit.app",
-  resume:  "https://YOUR-RESUME-REPL.replit.app"
-};
-document.querySelectorAll("[data-tool]").forEach(function (a) {
-  var url = TOOLS[a.dataset.tool];
-  if (!url || url.indexOf("YOUR-") !== -1) { a.textContent = "Coming soon"; a.classList.add("off"); }
-  else { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
-});
-document.getElementById("y").textContent = new Date().getFullYear();
-</script>
+        function drawGrid() {
+            cellSize = canvas.width / gridSize;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    // Draw Bead (Circle look)
+                    ctx.fillStyle = grid[r][c];
+                    ctx.beginPath();
+                    ctx.arc(c * cellSize + cellSize/2, r * cellSize + cellSize/2, cellSize/2 - 1, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Inner hole of Perler Bead
+                    ctx.fillStyle = '#000000';
+                    ctx.beginPath();
+                    ctx.arc(c * cellSize + cellSize/2, r * cellSize + cellSize/2, cellSize/6, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Grid line outline
+                    ctx.strokeStyle = '#222';
+                    ctx.strokeRect(c * cellSize, r * cellSize, cellSize, cellSize);
+                }
+            }
+        }
+
+        function fillBead(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const c = Math.floor(x / cellSize);
+            const r = Math.floor(y / cellSize);
+
+            if (r >= 0 && r < gridSize && c >= 0 && c < gridSize) {
+                grid[r][c] = selectedColor;
+                drawGrid();
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; fillBead(e); });
+        canvas.addEventListener('mousemove', (e) => { if (isDrawing) fillBead(e); });
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseleave', () => isDrawing = false);
+
+        gridSelect.addEventListener('change', (e) => {
+            gridSize = parseInt(e.target.value);
+            grid = Array(gridSize).fill().map(() => Array(gridSize).fill('#111111'));
+            drawGrid();
+        });
+
+        clearBtn.addEventListener('click', () => {
+            grid = Array(gridSize).fill().map(() => Array(gridSize).fill('#111111'));
+            drawGrid();
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'crisp-beads-pattern.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+
+        drawGrid();
+    </script>
 </body>
 </html>
