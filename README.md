@@ -6,26 +6,29 @@ A specialized, elegant browser-based bead pattern designer and blueprint studio 
 
 ## ✨ Features
 
+* **Image Upload & Grid Conversion:** 
+  * Upload your own reference images directly into the studio.
+  * Automatically converts and scales imported images to fit your active bead grid dimensions seamlessly.
 * **Interactive Bead Blueprint Grid:** 
-  * Real-time live preview of your bead design[span_2](start_span)[span_2](end_span).
-  * Custom dimension controls supporting adjustable **Columns** and **Rows** (with real-time total bead count tracking)[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span).
+  * Real-time live preview of your bead design[span_0](start_span)[span_0](end_span).
+  * Custom dimension controls supporting adjustable **Columns** and **Rows** (with real-time total bead count tracking)[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span).
 * **Pattern & Starting Designs:** 
-  * Select from preset patterns (such as *Moon phases*) to jumpstart your creation[span_5](start_span)[span_5](end_span).
-  * Quick action buttons for generating designs, shuffling layouts, and clearing the board instantly[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span).
+  * Select from preset patterns (such as *Moon phases*) to jumpstart your creation[span_3](start_span)[span_3](end_span).
+  * Quick action buttons for generating designs, shuffling layouts, and clearing the board instantly[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span).
 * **Bead Palette & Custom Painting:** 
-  * Curated color palettes (e.g., *Moon lavender*) with visual color swatches[span_8](start_span)[span_8](end_span).
-  * **Click or drag across beads to paint** your board seamlessly using selected colors[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span).
-  * Custom bead color picker for advanced personalization[span_11](start_span)[span_11](end_span).
+  * Curated color palettes (e.g., *Moon lavender*) with visual color swatches[span_6](start_span)[span_6](end_span).
+  * **Click or drag across beads to paint** your board seamlessly using selected colors[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span).
+  * Custom bead color picker for advanced personalization[span_9](start_span)[span_9](end_span).
 * **Design Statistics:** 
-  * Tracks the number of unique colors used in your design and total beads on the board[span_12](start_span)[span_12](end_span).
+  * Tracks the number of unique colors used in your design and total beads on the board[span_10](start_span)[span_10](end_span).
 * **Export Options:** 
-  * Export your finished masterpiece instantly as a high-resolution **PNG blueprint** complete with file dimensions[span_13](start_span)[span_13](end_span).
+  * Export your finished masterpiece instantly as a high-resolution **PNG blueprint** complete with file dimensions[span_11](start_span)[span_11](end_span).
 
 ---
 
 ## 🚀 Tech Stack
 
-* **HTML5 Canvas & JavaScript (ES6+):** Powers the grid rendering, interactive mouse/touch drag painting, and PNG blueprint compilation.
+* **HTML5 Canvas & JavaScript (ES6+):** Powers image processing, grid rendering, interactive mouse/touch drag painting, and PNG blueprint compilation.
 * **Tailwind CSS:** Provides a clean, modern, dark-themed responsive user interface tailored for creative hobbyists.
 
 ---
