@@ -554,4 +554,36 @@
           (width - padding * 2 - gap * (columns - 1)) / columns,
           (height - padding * 2 - gap * (rows - 1)) / rows
         );
-  
+  const startY = (height - totalH) / 2;
+        const px = event.clientX - rect.left - startX;
+        const py = event.clientY - rect.top - startY;
+        const cellX = Math.floor(px / (diameter + gap));
+        const cellY = Math.floor(py / (diameter + gap));
+        if (cellX < 0 || cellX >= columns || cellY < 0 || cellY >= rows) return;
+
+        const key = `${cellX},${cellY}`;
+        if (lastPainted === key) return;
+        lastPainted = key;
+        cells[cellY][cellX] = activeColor;
+        draw();
+      }
+
+      canvas.addEventListener("pointerdown", (event) => {
+        isPainting = true;
+        lastPainted = "";
+        canvas.setPointerCapture(event.pointerId);
+        paintAtPointer(event);
+      });
+      canvas.addEventListener("pointermove", (event) => {
+        if (isPainting) paintAtPointer(event);
+      });
+      canvas.addEventListener("pointerup", () => { isPainting = false; lastPainted = ""; });
+      canvas.addEventListener("pointercancel", () => { isPainting = false; lastPainted = ""; });
+
+      document.getElementById("generateButton").addEventListener("click", generate);
+      document.getElementById("shuffleButton").addEventListener("click", () => {
+        patternSelect.value = "random";
+        generate();
+      });
+      patternSelect.addEventListener("change", generate);
+      
