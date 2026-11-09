@@ -614,7 +614,7 @@
         renderPalette();
       });
 
-      document.getElementById("exportButton").addEventListener("click", () => {
+     document.getElementById("exportButton").addEventListener("click", () => {
         const link = document.createElement("a");
         link.download = `moonlit-beads-${columns}x${rows}.png`;
         link.href = canvas.toDataURL("image/png");
@@ -625,16 +625,12 @@
       window.addEventListener("resize", resizeCanvas);
       renderPalette();
       generate();
-      });
+    })(); // ⭐ Siguraduhing buo at nandito ito para gumana ang mga buttons sa taas!
+  </script>
 
-<        // Dito natin isara nang tama ang script block sa itaas kung meron man
-        window.addEventListener("resize", resizeCanvas);
-        renderPalette();
-        generate();
-      });
-    
-    <footer class="site-footer" style="text-align: center; padding: 1.5rem 1rem; font-size: 0.875rem; color: #94a3b8; background-color: #0f172a; border-top: 1px solid #1e293b; margin-top: auto;">
-    <span>© <span id="year"></span> Pixel Studio</span> • 
+  <!-- Tamang Dark Theme Footer para sakto sa kulay at hindi masira ang aesthetic -->
+  <footer class="site-footer" style="text-align: center; padding: 1.5rem 1rem; font-size: 0.875rem; color: #94a3b8; background-color: #0f172a; border-top: 1px solid #1e293b; margin-top: auto;">
+    <span>© <span id="year"></span> Moonlit Beads</span> • 
     <a
       href="https://ko-fi.com/Handlevaultofficial"
       target="_blank"
@@ -642,11 +638,10 @@
       style="color: #f472b6; font-weight: 600; text-decoration: underline; margin-left: 0.5rem;"
     >☕ Buy me a Ko-fi</a>
   </footer>
-
-          
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+        
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 
 </body>
 </html>
