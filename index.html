@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beads Pattern Studio - Sailor Moon Edition</title>
+    <title>Moonlight Beads Pattern Blueprint - Crisp Suite</title>
     <style>
         :root {
-            --arcade-bg: #0d050a;
-            --arcade-panel: #1a0d14;
-            --arcade-border: #ff007f;
-            --arcade-pink: #ff3399;
-            --arcade-yellow: #ffee00;
-            --text-color: #ff3399;
+            --bg-color: #f8fafc;
+            --panel-bg: #ffffff;
+            --border-color: #cbd5e1;
+            --primary-pink: #db2777;
+            --accent-yellow: #ca8a04;
+            --text-main: #1e293b;
         }
         body {
             font-family: 'Courier New', Courier, monospace;
-            background-color: var(--arcade-bg);
-            color: var(--text-color);
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -25,48 +25,73 @@
         }
         .container {
             width: 100%;
-            max-width: 750px;
-            background: var(--arcade-panel);
-            border: 3px solid var(--arcade-border);
-            padding: 25px;
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
-            border-radius: 4px;
+            max-width: 800px;
+            background: var(--panel-bg);
+            border: 2px solid var(--border-color);
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
         }
-        h1 {
-            text-align: center;
-            color: var(--arcade-yellow);
-            font-size: 1.5rem;
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
             margin-bottom: 20px;
-            text-shadow: 2px 2px var(--arcade-border);
-            letter-spacing: 2px;
+        }
+        .invoice-header h1 {
+            font-size: 1.4rem;
+            color: var(--primary-pink);
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .invoice-header p {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin: 0;
+        }
+        .badge {
+            background: #fce7f3;
+            color: var(--primary-pink);
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid #fbcfe8;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
         .grid-controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
         }
         @media (max-width: 600px) {
             .grid-controls { grid-template-columns: 1fr; }
         }
         .tool-group {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
         label {
             display: block;
             margin-bottom: 6px;
             font-weight: bold;
-            color: var(--arcade-yellow);
-            font-size: 0.85rem;
+            color: var(--text-main);
+            font-size: 0.8rem;
             text-transform: uppercase;
         }
         input[type="file"], select, button {
             width: 100%;
-            padding: 12px;
-            background: #000;
-            color: var(--text-color);
-            border: 2px solid var(--arcade-border);
-            border-radius: 0px;
+            padding: 10px;
+            background: #ffffff;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
             font-family: inherit;
             font-weight: bold;
             box-sizing: border-box;
@@ -75,37 +100,33 @@
         input[type="file"] {
             cursor: pointer;
             font-size: 0.75rem;
-        }
-        select option {
-            background: #0d050a;
-            color: var(--text-color);
+            background: #f8fafc;
         }
         button {
-            background-color: var(--arcade-yellow);
-            color: #000;
+            background-color: var(--primary-pink);
+            color: #ffffff;
             cursor: pointer;
-            margin-top: 10px;
-            border-color: var(--arcade-yellow);
-            box-shadow: 0 0 10px rgba(255, 238, 0, 0.5);
-            transition: all 0.1s;
+            margin-top: 15px;
+            border-color: var(--primary-pink);
+            transition: background 0.2s;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         button:hover {
-            background-color: var(--arcade-border);
-            border-color: var(--arcade-border);
-            color: #fff;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.7);
+            background-color: #be185d;
         }
         .preview-container {
             margin-top: 20px;
             text-align: center;
-            border: 2px dashed var(--arcade-border);
-            padding: 15px;
-            min-height: 220px;
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            min-height: 280px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #050204;
+            background: #ffffff;
+            overflow: auto;
+            border-radius: 6px;
         }
         canvas {
             max-width: 100%;
@@ -116,63 +137,67 @@
             margin-top: 25px;
             text-align: center;
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: #64748b;
             line-height: 1.8;
             letter-spacing: 1px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
             text-transform: uppercase;
         }
         .footer a {
-            color: var(--arcade-yellow);
+            color: var(--primary-pink);
             text-decoration: none;
+            font-weight: bold;
         }
         .footer a:hover {
             text-decoration: underline;
-        }
-        .footer .kofi-link {
-            color: var(--arcade-border);
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>[ MOONLIGHT BEADS PATTERN STUDIO ]</h1>
+        <div class="invoice-header">
+            <div>
+                <h1>Moonlight Beads Blueprint</h1>
+                <p>Professional Fuse Bead Pattern & Metering Sheet</p>
+            </div>
+            <div class="badge">Sailor Moon Edition</div>
+        </div>
         
-        <div class="tool-group">
-            <label for="imageUpload">> 1. Upload or Drag Design Image</label>
+        <div class="tool-group" style="margin-bottom: 15px;">
+            <label for="imageUpload">> Select / Upload Design Image</label>
             <input type="file" id="imageUpload" accept="image/*" onchange="handleImage(event)">
         </div>
 
         <div class="grid-controls">
             <div class="tool-group">
-                <label for="gridSizeSelect">> 2. Bead Grid Size</label>
+                <label for="gridSizeSelect">> Pegboard Grid Size</label>
                 <select id="gridSizeSelect" onchange="reprocessImage()">
-                    <option value="12">12x12 (Mini Pegboard)</option>
-                    <option value="24" selected>24x24 (Standard Pegboard)</option>
-                    <option value="32">32x32 (Large Pegboard)</option>
-                    <option value="48">48x48 (Master Mosaic)</option>
+                    <option value="16">16x16 (Mini Grid)</option>
+                    <option value="24" selected>24x24 (Standard Grid)</option>
+                    <option value="32">32x32 (Large Grid)</option>
                 </select>
             </div>
             <div class="tool-group">
-                <label for="paletteSelect">> 3. Perler Bead Palette</label>
+                <label for="paletteSelect">> Color Tone Mode</label>
                 <select id="paletteSelect" onchange="reprocessImage()">
-                    <option value="full" selected>Full Color Palette</option>
-                    <option value="pastel">Sailor Moon Pastel Tones</option>
-                    <option value="neon">Cyber Arcade Neon</option>
+                    <option value="full" selected>Vivid Sailor Moon Colors</option>
+                    <option value="pastel">Soft Pastel Tones</option>
+                    <option value="neon">High Contrast Arcade</option>
                 </select>
             </div>
         </div>
 
         <div class="preview-container">
-            <canvas id="beadCanvas">UPLOAD IMAGE TO GENERATE BEAD PATTERN...</canvas>
+            <canvas id="beadCanvas">UPLOAD IMAGE TO GENERATE BLUEPRINT PATTERN...</canvas>
         </div>
 
-        <button id="downloadBtn" style="display:none;" onclick="downloadImage()">>> Download Bead Pattern Grid <<</button>
+        <button id="downloadBtn" style="display:none;" onclick="downloadImage()">>> Download Professional Pattern Blueprint <<</button>
         
         <div class="footer">
             HandleVault Digital • Crisp Suite Utility<br>
-            <a href="https://ko-fi.com//Handlevaultofficial" target="_blank" class="kofi-link">☕ Support on Ko-fi</a>
+            <a href="https://ko-fi.com//Handlevaultofficial" target="_blank">☕ Support on Ko-fi</a>
         </div>
     </div>
 
@@ -204,6 +229,19 @@
             }
         }
 
+        function drawOctagon(ctx, cx, cy, r) {
+            ctx.beginPath();
+            const angleOffset = Math.PI / 8;
+            for (let i = 0; i < 8; i++) {
+                const angle = i * (Math.PI / 4) + angleOffset;
+                const x = cx + r * Math.cos(angle);
+                const y = cy + r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+        }
+
         function processBeadPattern() {
             if (!uploadedImage) return;
 
@@ -213,6 +251,7 @@
             const gridSize = parseInt(document.getElementById('gridSizeSelect').value);
             const paletteMode = document.getElementById('paletteSelect').value;
 
+            // 1. Downsample image to grid dimensions
             const tempCanvas = document.createElement('canvas');
             const tempCtx = tempCanvas.getContext('2d');
             tempCanvas.width = gridSize;
@@ -221,31 +260,81 @@
             tempCtx.imageSmoothingEnabled = false;
             tempCtx.drawImage(uploadedImage, 0, 0, gridSize, gridSize);
 
-            try {
-                const imgData = tempCtx.getImageData(0, 0, gridSize, gridSize);
-                const data = imgData.data;
-                for (let i = 0; i < data.length; i += 4) {
-                    if (paletteMode === 'pastel') {
-                        data[i] = Math.min(255, data[i] + 30);     
-                        data[i+1] = Math.max(0, data[i+1] - 10);  
-                        data[i+2] = Math.min(255, data[i+2] + 40); 
-                    } else if (paletteMode === 'neon') {
-                        data[i] = data[i] > 127 ? 255 : 0;
-                        data[i+1] = data[i+1] > 127 ? 255 : 0;
-                        data[i+2] = data[i+2] > 127 ? 255 : 0;
-                    }
-                }
-                tempCtx.putImageData(imgData, 0, 0);
-            } catch (err) {
-                console.warn("Palette filter skipped.", err);
+            const imgData = tempCtx.getImageData(0, 0, gridSize, gridSize);
+            const data = imgData.data;
+
+            // 2. Blueprint / Invoice Layout Dimensions with Metering Margins
+            const beadSize = 26; 
+            const spacing = 4;   
+            const margin = 35; // Space for grid labels (1, 2, 3...)
+            const totalSize = gridSize * (beadSize + spacing) + spacing + (margin * 2);
+
+            canvas.width = totalSize;
+            canvas.height = totalSize;
+
+            // Clean, non-black professional background (Soft Light Gray)
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, totalSize, totalSize);
+
+            // Draw Blueprint Grid Lines & Metering Labels (Easy for seniors to read)
+            ctx.fillStyle = '#64748b';
+            ctx.font = '10px Courier New';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            for (let i = 0; i < gridSize; i++) {
+                const posCoord = margin + i * (beadSize + spacing) + (beadSize / 2);
+                const label = (i + 1).toString();
+                
+                // Top & Bottom Numbers
+                ctx.fillText(label, posCoord, margin / 2);
+                ctx.fillText(label, posCoord, totalSize - (margin / 2));
+
+                // Left & Right Letters (A, B, C...)
+                const letter = String.fromCharCode(65 + (i % 26));
+                ctx.fillText(letter, margin / 2, posCoord);
+                ctx.fillText(letter, totalSize - (margin / 2), posCoord);
             }
 
-            const displaySize = 400; 
-            canvas.width = displaySize;
-            canvas.height = displaySize;
-            ctx.imageSmoothingEnabled = false;
-            
-            ctx.drawImage(tempCanvas, 0, 0, gridSize, gridSize, 0, 0, displaySize, displaySize);
+            // Draw Octagonal Beads with Shiny 3D Gloss
+            for (let y = 0; y < gridSize; y++) {
+                for (let x = 0; x < gridSize; x++) {
+                    const i = (y * gridSize + x) * 4;
+                    let r = data[i];
+                    let g = data[i+1];
+                    let b = data[i+2];
+
+                    if (paletteMode === 'pastel') {
+                        r = Math.min(255, r + 40);
+                        g = Math.max(0, g - 15);
+                        b = Math.min(255, b + 50);
+                    } else if (paletteMode === 'neon') {
+                        r = r > 120 ? 255 : 0;
+                        g = g > 120 ? 255 : 0;
+                        b = b > 120 ? 255 : 0;
+                    }
+
+                    const cx = margin + x * (beadSize + spacing) + spacing + (beadSize / 2);
+                    const cy = margin + y * (beadSize + spacing) + spacing + (beadSize / 2);
+                    const radius = (beadSize / 2) - 1;
+
+                    // Draw Bead Shape
+                    drawOctagon(ctx, cx, cy, radius);
+                    ctx.fillStyle = `rgb(${r},${g},${b})`;
+                    ctx.fill();
+
+                    // Clean border for grid structure
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+                    ctx.stroke();
+
+                    // Shiny 3D gloss highlight reflection
+                    ctx.beginPath();
+                    ctx.arc(cx - 3, cy - 3, radius * 0.35, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+                    ctx.fill();
+                }
+            }
 
             document.getElementById('downloadBtn').style.display = 'block';
         }
@@ -254,7 +343,7 @@
             const canvas = document.getElementById('beadCanvas');
             try {
                 const link = document.createElement('a');
-                link.download = 'sailor-moon-bead-pattern.png';
+                link.download = 'moonlight-beads-blueprint.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             } catch (err) {
