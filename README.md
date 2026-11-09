@@ -17,4 +17,6 @@ If you want to run or test this project locally on your machine, follow these st
 1. Clone the repository:
    ```bash
    git clone [https://github.com/handlevault-official/crisp-beads-pattern-generator.git](https://github.com/handlevault-official/crisp-beads-pattern-generator.git)
-   
+  ## 📬 Support & Contact
+
+Created by [HandleVault Official](https://github.com/handlevault-official). If you have questions, feedback, or suggestions, feel free to reach out via email at **handlevault.digital@proton.me**.
