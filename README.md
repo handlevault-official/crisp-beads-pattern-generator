@@ -27,7 +27,7 @@ If you want to run or test this project locally on your machine, follow these st
    git clone [https://github.com/handlevault-official/crisp-moonlit-beads-blueprint-studio.git](https://github.com/handlevault-official/crisp-moonlit-beads-blueprint-studio.git)
    
 2. Navigate to the project directory:
-   cd crisp-beads-pattern-studio
+   cd crisp-moonlit-beads-blueprint-studio
 
 3. Run a local HTTP server (using Python):
    python3 -m http.server 8000
