@@ -1,3 +1,3 @@
 git add index.html
-git commit -m "Upgrade Beads Generator with mobile touch drawing, undo/redo, save/load, and Ko-fi"
+git commit -m "Add Zoom controls and live Progress Tracker to Beads Pattern Generator"
 git push -u origin main
