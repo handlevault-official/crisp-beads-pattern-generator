@@ -49,6 +49,13 @@ Distributed under the MIT License. See the LICENSE file for more information.
 
 ---
 
+### 💖 Support the Project
+If this tool helped you streamline your workflow, consider buying me a coffee to support continuous development!
+* [☕ Support on Ko-fi](https://ko-fi.com/Handlevaultofficial)
+
+### 🔗 Share Crisp Suite
+Found this app useful? Feel free to share the link with your friends, colleagues, or communities (X, Facebook, LinkedIn) to help others boost their productivity too!
+
 <TemplateWidget component_placeholder_id="im_cfde6153016121ea" header_title="Pixel Art Converter MVP & Setup Instructions" templateName="checklist">
 ```json
 {
