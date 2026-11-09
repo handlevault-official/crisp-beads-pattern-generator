@@ -1,291 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crisp Beads Pattern Generator</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beads Pattern Generator — Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #f1f5f9;
+      --surface: #ffffff;
+      --primary: #0f172a;
+      --accent: #ec4899;
+      --accent-hover: #db2777;
+      --kofi-color: #ff5e5b;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --border-light: #e2e8f0;
+      --radius: 10px;
+      --shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    body { background: var(--bg-canvas); color: var(--text-main); padding: 20px 12px; min-height: 100vh; }
 
-        body {
-            background-color: #1a1a24;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
-        }
+    .app-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 32px 24px;
+      border: 1px solid var(--border-light);
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            font-family: 'Press Start 2P', cursive;
-        }
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
 
-        header h1 {
-            color: #ff477e;
-            font-size: 20px;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px #4895ef;
-        }
+    .brand-title h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
 
-        header p {
-            color: #b5e2fa;
-            font-size: 10px;
-        }
+    .brand-title p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        .sidebar {
-            flex: 1 1 280px;
-            background: #242438;
-            border: 2px solid #ff477e;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
+    .tool-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-        .main-canvas {
-            flex: 2 1 500px;
-            background: #242438;
-            border: 2px solid #4895ef;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
+    label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+    }
 
-        h2 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
-            color: #ffdd00;
-            margin-bottom: 15px;
-            border-bottom: 1px dashed #ff477e;
-            padding-bottom: 8px;
-        }
+    select, input[type="color"] {
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      background: white;
+      outline: none;
+    }
 
-        .palette {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+    /* Palette Swatches */
+    .palette {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
 
-        .color-swatch {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 3px solid #1a1a24;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            transition: transform 0.1s ease;
-        }
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .color-swatch:hover { transform: scale(1.1); }
+    .color-swatch.active { border-color: var(--primary); transform: scale(1.15); }
 
-        .color-swatch:hover, .color-swatch.selected {
-            transform: scale(1.2);
-            border-color: #ffffff;
-        }
+    /* Grid Area */
+    .canvas-wrapper {
+      width: 100%;
+      overflow: auto;
+      background: #fafafa;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
 
-        .btn {
-            display: block;
-            width: 100%;
-            background: #ff477e;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 10px;
-            text-align: center;
-            text-decoration: none;
-            transition: background 0.2s ease;
-        }
+    .pixel-grid {
+      display: grid;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
 
-        .btn:hover {
-            background: #ff1053;
-        }
+    .pixel-cell {
+      width: 24px;
+      height: 24px;
+      background: #ffffff;
+      cursor: pointer;
+      user-select: none;
+    }
 
-        .btn-blue {
-            background: #4895ef;
-        }
+    /* Buttons */
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.1s;
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:active { transform: scale(0.98); }
 
-        .btn-blue:hover {
-            background: #3f37c9;
-        }
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { background: #f1f5f9; }
 
-        #gridCanvas {
-            background: #111;
-            border: 2px solid #ffffff;
-            cursor: crosshair;
-            margin-top: 10px;
-            border-radius: 4px;
-        }
+    .btn-kofi {
+      background: var(--kofi-color);
+      color: white;
+    }
+    .btn-kofi:hover { background: #e04845; }
 
-        .controls {
-            margin-bottom: 15px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+    .actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-light);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-        select {
-            padding: 8px;
-            border-radius: 6px;
-            border: none;
-            background: #1a1a24;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
+    .action-buttons-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .app-container { padding: 16px 12px; }
+      .actions-bar { flex-direction: column; align-items: stretch; }
+      .action-buttons-group { flex-direction: column; width: 100%; }
+      .actions-bar a, .actions-bar button { width: 100%; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>CRISP BEADS PATTERN GENERATOR</h1>
-        <p>Design Perler & Hama Bead Patterns Easily!</p>
-    </header>
-
-    <div class="container">
-        <!-- Sidebar: Palette & Controls -->
-        <div class="sidebar">
-            <h2>COLOR PALETTE</h2>
-            <div class="palette" id="palette"></div>
-
-            <h2>GRID SIZE</h2>
-            <div class="controls">
-                <label for="gridSelect">Canvas Size:</label>
-                <select id="gridSelect">
-                    <option value="16">16 x 16 Pegboard</option>
-                    <option value="29" selected>29 x 29 Standard</option>
-                    <option value="32">32 x 32 Large</option>
-                </select>
-            </div>
-
-            <button class="btn" id="clearBtn">Clear Canvas</button>
-
-            <h2>STORE & SUPPORT</h2>
-            <a href="https://ko-fi.com/handlevault" target="_blank" class="btn btn-blue">Sponsor on Ko-fi</a>
-        </div>
-
-        <!-- Main Studio Area -->
-        <div class="main-canvas">
-            <h2>BEAD PEGBOARD CANVAS</h2>
-            <p style="font-size: 12px; color: #aaa; margin-bottom: 10px;">Click or drag on the pegboard to place beads!</p>
-            <canvas id="gridCanvas" width="464" height="464"></canvas>
-            <button class="btn btn-blue" id="downloadBtn" style="margin-top: 15px; max-width: 300px;">Download Pattern PNG</button>
-        </div>
+  <div class="app-container">
+    <div class="top-header">
+      <div class="brand-title">
+        <h1>BEADS PATTERN STUDIO</h1>
+        <p>Interactive Pixel & Bead Grid Generator</p>
+      </div>
+      <div class="tool-group">
+        <label>Grid Size</label>
+        <select id="gridSize" onchange="changeGridSize()">
+          <option value="10">10 x 10</option>
+          <option value="15" selected>15 x 15</option>
+          <option value="20">20 x 20</option>
+          <option value="25">25 x 25</option>
+        </select>
+      </div>
     </div>
 
-    <script>
-        const canvas = document.getElementById('gridCanvas');
-        const ctx = canvas.getContext('2d');
-        const paletteContainer = document.getElementById('palette');
-        const gridSelect = document.getElementById('gridSelect');
-        const clearBtn = document.getElementById('clearBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
+    <!-- Color Palette Selection -->
+    <div class="palette" id="paletteContainer"></div>
 
-        let gridSize = parseInt(gridSelect.value);
-        let cellSize = canvas.width / gridSize;
-        let selectedColor = '#ff477e';
-        let isDrawing = false;
+    <!-- Toolbar: Undo/Redo/Clear/Save -->
+    <div class="toolbar">
+      <div class="tool-group">
+        <button class="btn btn-secondary" onclick="undo()">↶ Undo</button>
+        <button class="btn btn-secondary" onclick="redo()">↷ Redo</button>
+        <button class="btn btn-secondary" onclick="clearGrid()">Clear</button>
+      </div>
+      <div class="tool-group">
+        <button class="btn btn-secondary" onclick="savePattern()">Save Pattern</button>
+        <button class="btn btn-secondary" onclick="loadPattern()">Load Saved</button>
+      </div>
+    </div>
 
-        // Common Perler Bead Colors
-        const beadColors = [
-            '#ff477e', '#ff1053', '#ff9f1c', '#ffbf00', '#2ec4b6',
-            '#4895ef', '#7209b7', '#4cc9f0', '#ffffff', '#000000',
-            '#8d99ae', '#d90429', '#ffb703', '#fb8500', '#06d6a0'
-        ];
+    <!-- Canvas Grid Area -->
+    <div class="canvas-wrapper">
+      <div class="pixel-grid" id="pixelGrid"></div>
+    </div>
 
-        // Initialize Palette
-        beadColors.forEach((color, index) => {
-            const swatch = document.createElement('div');
-            swatch.className = 'color-swatch' + (index === 0 ? ' selected' : '');
-            swatch.style.backgroundColor = color;
-            swatch.addEventListener('click', () => {
-                document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
-                swatch.classList.add('selected');
-                selectedColor = color;
-            });
-            paletteContainer.appendChild(swatch);
-        });
+    <!-- Action Bar with Ko-fi -->
+    <div class="actions-bar">
+      <a href="https://ko-fi.com/handlevault" target="_blank" class="btn btn-kofi">
+        ☕ Support on Ko-fi
+      </a>
+      <div class="action-buttons-group">
+        <button class="btn" onclick="window.print()">Export / Print</button>
+      </div>
+    </div>
+  </div>
 
-        // Grid Array
-        let grid = Array(gridSize).fill().map(() => Array(gridSize).fill('#111111'));
+  <script>
+    const colors = ['#0f172a', '#ef4444', '#f97316', '#f59e0b', '#10b981', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#ffffff'];
+    let currentColor = colors[0];
+    let gridSize = 15;
+    let gridData = [];
+    let historyStack = [];
+    let redoStack = [];
+    let isDrawing = false;
 
-        function drawGrid() {
-            cellSize = canvas.width / gridSize;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    // Draw Bead (Circle look)
-                    ctx.fillStyle = grid[r][c];
-                    ctx.beginPath();
-                    ctx.arc(c * cellSize + cellSize/2, r * cellSize + cellSize/2, cellSize/2 - 1, 0, Math.PI * 2);
-                    ctx.fill();
+    function initPalette() {
+      const container = document.getElementById('paletteContainer');
+      container.innerHTML = '';
+      colors.forEach((col, idx) => {
+        const sw = document.createElement('div');
+        sw.className = `color-swatch ${idx === 0 ? 'active' : ''}`;
+        sw.style.backgroundColor = col;
+        sw.onclick = () => {
+          document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+          sw.classList.add('active');
+          currentColor = col;
+        };
+        container.appendChild(sw);
+      });
+    }
 
-                    // Inner hole of Perler Bead
-                    ctx.fillStyle = '#000000';
-                    ctx.beginPath();
-                    ctx.arc(c * cellSize + cellSize/2, r * cellSize + cellSize/2, cellSize/6, 0, Math.PI * 2);
-                    ctx.fill();
+    function initGrid() {
+      const grid = document.getElementById('pixelGrid');
+      grid.style.gridTemplateColumns = `repeat(${gridSize}, 24px)`;
+      grid.innerHTML = '';
+      gridData = Array(gridSize * gridSize).fill('#ffffff');
 
-                    // Grid line outline
-                    ctx.strokeStyle = '#222';
-                    ctx.strokeRect(c * cellSize, r * cellSize, cellSize, cellSize);
-                }
-            }
+      for (let i = 0; i < gridSize * gridSize; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'pixel-cell';
+        cell.dataset.index = i;
+        
+        cell.onmousedown = (e) => { isDrawing = true; paintCell(i); };
+        cell.onmouseenter = () => { if (isDrawing) paintCell(i); };
+        cell.ontouchstart = (e) => { e.preventDefault(); isDrawing = true; paintCell(i); };
+        cell.ontouchmove = (e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          const target = document.elementFromPoint(touch.clientX, touch.clientY);
+          if (target && target.dataset.index !== undefined) {
+            paintCell(parseInt(target.dataset.index));
+          }
+        };
+
+        grid.appendChild(cell);
+      }
+      saveState();
+    }
+
+    window.onmouseup = () => { isDrawing = false; };
+    window.ontouchend = () => { isDrawing = false; };
+
+    function paintCell(index) {
+      if (gridData[index] === currentColor) return;
+      saveState();
+      redoStack = []; // clear redo on new action
+      gridData[index] = currentColor;
+      updateGridVisual();
+    }
+
+    function updateGridVisual() {
+      const cells = document.getElementById('pixelGrid').children;
+      for (let i = 0; i < gridData.length; i++) {
+        cells[i].style.backgroundColor = gridData[i];
+      }
+    }
+
+    function saveState() {
+      historyStack.push([...gridData]);
+      if (historyStack.length > 25) historyStack.shift(); // limit history
+    }
+
+    function undo() {
+      if (historyStack.length > 1) {
+        redoStack.push(historyStack.pop());
+        gridData = [...historyStack[historyStack.length - 1]];
+        updateGridVisual();
+      }
+    }
+
+    function redo() {
+      if (redoStack.length > 0) {
+        const nextState = redoStack.pop();
+        historyStack.push(nextState);
+        gridData = [...nextState];
+        updateGridVisual();
+      }
+    }
+
+    function clearGrid() {
+      saveState();
+      gridData.fill('#ffffff');
+      updateGridVisual();
+    }
+
+    function changeGridSize() {
+      gridSize = parseInt(document.getElementById('gridSize').value);
+      historyStack = [];
+      redoStack = [];
+      initGrid();
+    }
+
+    function savePattern() {
+      const saveObj = { gridSize, gridData };
+      localStorage.setItem('beads_pattern_save', JSON.stringify(saveObj));
+      alert('Pattern saved successfully in browser storage!');
+    }
+
+    function loadPattern() {
+      const saved = localStorage.getItem('beads_pattern_save');
+      if (saved) {
+        const obj = JSON.parse(saved);
+        gridSize = obj.gridSize;
+        document.getElementById('gridSize').value = gridSize;
+        gridData = obj.gridData;
+        historyStack = [[...gridData]];
+        redoStack = [];
+        
+        const grid = document.getElementById('pixelGrid');
+        grid.style.gridTemplateColumns = `repeat(${gridSize}, 24px)`;
+        grid.innerHTML = '';
+        for (let i = 0; i < gridSize * gridSize; i++) {
+          const cell = document.createElement('div');
+          cell.className = 'pixel-cell';
+          cell.dataset.index = i;
+          cell.onmousedown = () => { isDrawing = true; paintCell(i); };
+          cell.onmouseenter = () => { if (isDrawing) paintCell(i); };
+          grid.appendChild(cell);
         }
+        updateGridVisual();
+        alert('Pattern loaded successfully!');
+      } else {
+        alert('No saved pattern found.');
+      }
+    }
 
-        function fillBead(e) {
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const c = Math.floor(x / cellSize);
-            const r = Math.floor(y / cellSize);
-
-            if (r >= 0 && r < gridSize && c >= 0 && c < gridSize) {
-                grid[r][c] = selectedColor;
-                drawGrid();
-            }
-        }
-
-        canvas.addEventListener('mousedown', (e) => { isDrawing = true; fillBead(e); });
-        canvas.addEventListener('mousemove', (e) => { if (isDrawing) fillBead(e); });
-        canvas.addEventListener('mouseup', () => isDrawing = false);
-        canvas.addEventListener('mouseleave', () => isDrawing = false);
-
-        gridSelect.addEventListener('change', (e) => {
-            gridSize = parseInt(e.target.value);
-            grid = Array(gridSize).fill().map(() => Array(gridSize).fill('#111111'));
-            drawGrid();
-        });
-
-        clearBtn.addEventListener('click', () => {
-            grid = Array(gridSize).fill().map(() => Array(gridSize).fill('#111111'));
-            drawGrid();
-        });
-
-        downloadBtn.addEventListener('click', () => {
-            const link = document.createElement('a');
-            link.download = 'crisp-beads-pattern.png';
-            link.href = canvas.toDataURL();
-            link.click();
-        });
-
-        drawGrid();
-    </script>
+    window.onload = () => {
+      initPalette();
+      initGrid();
+    };
+  </script>
 </body>
 </html>
