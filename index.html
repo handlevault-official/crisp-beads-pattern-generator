@@ -263,7 +263,7 @@
     <!-- Color Palette Selection -->
     <div class="palette" id="paletteContainer"></div>
 
-    <!-- Toolbar: Zoom, Undo/Redo, Clear, Save -->
+    <!-- Toolbar: Zoom, Undo/Redo, Clear, Save/Load -->
     <div class="toolbar">
       <div class="tool-group">
         <label>Zoom</label>
@@ -287,13 +287,13 @@
       <div class="pixel-grid" id="pixelGrid"></div>
     </div>
 
-    <!-- Action Bar with Ko-fi -->
+    <!-- Action Bar with Ko-fi & PNG Export -->
     <div class="actions-bar">
       <a href="https://ko-fi.com/handlevault" target="_blank" class="btn btn-kofi">
         ☕ Support on Ko-fi
       </a>
       <div class="action-buttons-group">
-        <button class="btn" onclick="window.print()">Export / Print</button>
+        <button class="btn" onclick="exportPNG()">Download PNG Image</button>
       </div>
     </div>
   </div>
@@ -306,7 +306,7 @@
     let historyStack = [];
     let redoStack = [];
     let isDrawing = false;
-    let currentZoom = 1; // zoom scale multiplier
+    let currentZoom = 1;
 
     function initPalette() {
       const container = document.getElementById('paletteContainer');
@@ -374,7 +374,6 @@
 
     function updateProgress() {
       const total = gridSize * gridSize;
-      // Count cells that are NOT white (#ffffff)
       const filled = gridData.filter(c => c !== '#ffffff').length;
       const percent = Math.round((filled / total) * 100);
       
@@ -382,29 +381,17 @@
       document.getElementById('progressFill').style.width = `${percent}%`;
     }
 
-    /* Zoom Controls */
     function zoomIn() {
-      if (currentZoom < 2.0) {
-        currentZoom += 0.2;
-        applyZoom();
-      }
+      if (currentZoom < 2.0) { currentZoom += 0.2; applyZoom(); }
     }
-
     function zoomOut() {
-      if (currentZoom > 0.6) {
-        currentZoom -= 0.2;
-        applyZoom();
-      }
+      if (currentZoom > 0.6) { currentZoom -= 0.2; applyZoom(); }
     }
-
     function resetZoom() {
-      currentZoom = 1.0;
-      applyZoom();
+      currentZoom = 1.0; applyZoom();
     }
-
     function applyZoom() {
-      const grid = document.getElementById('pixelGrid');
-      grid.style.transform = `scale(${currentZoom})`;
+      document.getElementById('pixelGrid').style.transform = `scale(${currentZoom})`;
     }
 
     function saveState() {
@@ -482,6 +469,32 @@
       } else {
         alert('No saved pattern found.');
       }
+    }
+
+    /* True PNG Export Function */
+    function exportPNG() {
+      const scale = 20; // high resolution multiplier per cell
+      const canvas = document.createElement('canvas');
+      canvas.width = gridSize * scale;
+      canvas.height = gridSize * scale;
+      const ctx = canvas.getContext('2d');
+
+      for (let i = 0; i < gridData.length; i++) {
+        const x = (i % gridSize) * scale;
+        const y = Math.floor(i / gridSize) * scale;
+        ctx.fillStyle = gridData[i];
+        ctx.fillRect(x, y, scale, scale);
+        
+        // Add subtle grid borders
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x, y, scale, scale);
+      }
+
+      const link = document.createElement('a');
+      link.download = 'beads-pattern.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     }
 
     window.onload = () => {
