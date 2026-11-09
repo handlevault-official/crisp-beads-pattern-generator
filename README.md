@@ -1,18 +1,20 @@
-# 🎨 Beads Pattern Studio
+# 🎨 Crisp Beads Pattern Studio (v1.0 Official)
 
-A lightweight, browser-based pattern design tool created for bead artists, crafters, and DIY designers. Easily sketch grids, manage custom color palettes, track your progress, and export your designs. Built as a fast, privacy-focused MVP using vanilla HTML5, CSS, and JavaScript.
+A creative, browser-based bead pattern and sprite blueprint generator built for the **Crisp Suite**. Designed for crafters, pixel artists, and DIY hobbyists.
 
-> **[BETA / EARLY ACCESS TOOL]** — A lightweight, free browser-based pattern design tool built for bead artists, crafters, and DIY designers. Easily sketch grids, manage custom palettes, and export designs. No account required. All processing and project saves happen securely right inside your browser session.
+## ✨ Core Features (v1.0)
+* **Image to Bead Blueprint:** Upload any image and instantly convert it into a gridded color-coded bead pattern.
+* **Custom Color Palettes & Grids:** Adjust grid dimensions and palette modes to match your physical bead kits (Perler, Hama, etc.).
+* **Interactive Canvas:** Draw, edit, clear, and undo/redo strokes directly on the pattern.
+* **PNG Export:** Save your final bead blueprint clearly to your device.
+
+## 🚀 Quick Start
+1. Load up the live app via GitHub Pages.
+2. Upload your design or draw a custom pattern.
+3. Export your blueprint and start crafting!
 
 ---
-
-## 🚀 Key Features
-
-* **Interactive Grid Workspace:** Draw, sketch, and design custom bead patterns directly in your browser with responsive controls.
-* **Palette Management:** Customize and select colors tailored to your specific bead collections.
-* **Undo & Redo Support:** Seamlessly step back or forward while editing your creative layouts.
-* **Local Project Storage:** Save and load your custom bead patterns directly into your browser's local storage.
-* **PNG Export:** Export your finished grid layouts as high-resolution image files for easy printing, sharing, or crafting.
+*HandleVault Digital • Crisp Suite Utility v1.0*
 
 ---
 
