@@ -627,18 +627,31 @@
       generate();
       });
 
-<footer class="site-footer">
-  <span>© <span id="year"></span> Pixel Studio</span>
-  <a
-    href="https://ko-fi.com/Handlevaultofficial"
-    target="_blank"
-    rel="noopener noreferrer"
-  >☕ Buy me a Ko-fi</a>
-</footer>
-      
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<        // Dito natin isara nang tama ang script block sa itaas kung meron man
+        window.addEventListener("resize", resizeCanvas);
+        renderPalette();
+        generate();
+      });
+    </script> <!-- ⭐ Siguraduhing may ganitong closing tag bago ang footer -->
+
+    <!-- Footer na may kasamang simpleng inline style para siguradong litaw -->
+    <footer class="site-footer" style="text-align: center; padding: 1.5rem 1rem; font-size: 0.875rem; color: #64748b; background-color: #ffffff; border-top: 1px solid #e2e8f0; margin-top: auto;">
+      <span>© <span id="year"></span> Pixel Studio</span> • 
+      <a
+        href="https://ko-fi.com/Handlevaultofficial"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color: #db2777; font-weight: 600; text-decoration: underline; margin-left: 0.5rem;"
+      >☕ Buy me a Ko-fi</a>
+    </footer>
+          
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
