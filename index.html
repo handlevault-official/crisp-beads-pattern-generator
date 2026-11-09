@@ -3,218 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beads Pattern Studio - Crisp Suite</title>
-    <!-- Tailwind CSS for modern styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Beads Pattern Studio - Sailor Moon Edition</title>
     <style>
-        @media print {
-            body { background: white; -webkit-print-color-adjust: exact; }
-            .no-print { display: none !important; }
+        :root {
+            --arcade-bg: #0d050a;
+            --arcade-panel: #1a0d14;
+            --arcade-border: #ff007f;
+            --arcade-pink: #ff3399;
+            --arcade-yellow: #ffee00;
+            --text-color: #ff3399;
+        }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--arcade-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 750px;
+            background: var(--arcade-panel);
+            border: 3px solid var(--arcade-border);
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+            border-radius: 4px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--arcade-yellow);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px var(--arcade-border);
+            letter-spacing: 2px;
+        }
+        .grid-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            .grid-controls { grid-template-columns: 1fr; }
+        }
+        .tool-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: var(--arcade-yellow);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        input[type="file"], select, button {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            color: var(--text-color);
+            border: 2px solid var(--arcade-border);
+            border-radius: 0px;
+            font-family: inherit;
+            font-weight: bold;
+            box-sizing: border-box;
+            outline: none;
+        }
+        input[type="file"] {
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        select option {
+            background: #0d050a;
+            color: var(--text-color);
+        }
+        button {
+            background-color: var(--arcade-yellow);
+            color: #000;
+            cursor: pointer;
+            margin-top: 10px;
+            border-color: var(--arcade-yellow);
+            box-shadow: 0 0 10px rgba(255, 238, 0, 0.5);
+            transition: all 0.1s;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: var(--arcade-border);
+            border-color: var(--arcade-border);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.7);
+        }
+        .preview-container {
+            margin-top: 20px;
+            text-align: center;
+            border: 2px dashed var(--arcade-border);
+            padding: 15px;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #050204;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+        }
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            line-height: 1.8;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .footer a {
+            color: var(--arcade-yellow);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .footer .kofi-link {
+            color: var(--arcade-border);
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+<body>
 
-    <!-- Top Navigation / Header -->
-    <header class="bg-slate-950 border-b border-purple-900/50 shadow-md no-print py-4 px-6 flex flex-wrap justify-between items-center">
-        <div>
-            <h1 class="text-xl font-bold tracking-wide flex items-center gap-2">
-                🎨 Beads Pattern Studio
-                <span class="text-xs bg-purple-600 text-white px-2 py-0.5 rounded uppercase tracking-wider font-semibold">Beta</span>
-            </h1>
-            <p class="text-xs text-slate-400 mt-0.5">Design custom bead patterns, manage custom palettes, and export your craft layouts.</p>
+    <div class="container">
+        <h1>[ MOONLIGHT BEADS PATTERN STUDIO ]</h1>
+        
+        <div class="tool-group">
+            <label for="imageUpload">> 1. Upload or Drag Design Image</label>
+            <input type="file" id="imageUpload" accept="image/*" onchange="handleImage(event)">
         </div>
-        <div class="flex items-center gap-3 mt-3 sm:mt-0">
-            <button onclick="clearGrid()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg text-sm font-medium transition border border-slate-700">
-                🗑️ Clear Grid
-            </button>
-            <button onclick="window.print()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow flex items-center gap-2">
-                💾 Export / Print Pattern
-            </button>
+
+        <div class="grid-controls">
+            <div class="tool-group">
+                <label for="gridSizeSelect">> 2. Bead Grid Size</label>
+                <select id="gridSizeSelect" onchange="reprocessImage()">
+                    <option value="12">12x12 (Mini Pegboard)</option>
+                    <option value="24" selected>24x24 (Standard Pegboard)</option>
+                    <option value="32">32x32 (Large Pegboard)</option>
+                    <option value="48">48x48 (Master Mosaic)</option>
+                </select>
+            </div>
+            <div class="tool-group">
+                <label for="paletteSelect">> 3. Perler Bead Palette</label>
+                <select id="paletteSelect" onchange="reprocessImage()">
+                    <option value="full" selected>Full Color Palette</option>
+                    <option value="pastel">Sailor Moon Pastel Tones</option>
+                    <option value="neon">Cyber Arcade Neon</option>
+                </select>
+            </div>
         </div>
-    </header>
 
-    <!-- Main Workspace -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div class="preview-container">
+            <canvas id="beadCanvas">UPLOAD IMAGE TO GENERATE BEAD PATTERN...</canvas>
+        </div>
 
-        <!-- Left Column: Controls & Palette (No Print) -->
-        <section class="lg:col-span-4 bg-slate-950/80 rounded-xl shadow-lg border border-purple-900/30 p-5 no-print flex flex-col gap-6">
-            
-            <!-- Grid Size Selector -->
-            <div>
-                <h2 class="text-sm font-bold text-purple-400 uppercase tracking-wider mb-2">1. Grid Resolution</h2>
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setGridSize(16)" id="btn-16" class="grid-size-btn py-2 text-xs font-semibold rounded-lg bg-purple-600 text-white transition">16 x 16</button>
-                    <button onclick="setGridSize(24)" id="btn-24" class="grid-size-btn py-2 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition">24 x 24</button>
-                    <button onclick="setGridSize(32)" id="btn-32" class="grid-size-btn py-2 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition">32 x 32</button>
-                </div>
-            </div>
+        <button id="downloadBtn" style="display:none;" onclick="downloadImage()">>> Download Bead Pattern Grid <<</button>
+        
+        <div class="footer">
+            HandleVault Digital • Crisp Suite Utility<br>
+            <a href="https://ko-fi.com" target="_blank" class="kofi-link">☕ Support on Ko-fi</a>
+        </div>
+    </div>
 
-            <!-- Color Palette -->
-            <div>
-                <h2 class="text-sm font-bold text-purple-400 uppercase tracking-wider mb-2">2. Bead Color Palette</h2>
-                <div id="paletteContainer" class="grid grid-cols-6 gap-2">
-                    <!-- Palettes will be populated via JS -->
-                </div>
-            </div>
-
-            <!-- Selected Color Indicator -->
-            <div class="bg-slate-900 border border-slate-800 p-3 rounded-lg flex items-center justify-between">
-                <span class="text-xs text-slate-400">Current Selected Bead:</span>
-                <div class="flex items-center gap-2">
-                    <div id="activeColorPreview" class="w-6 h-6 rounded-full border-2 border-white shadow-md bg-red-500"></div>
-                    <span id="activeColorName" class="text-xs font-semibold text-slate-200">Red</span>
-                </div>
-            </div>
-
-            <!-- Instructions -->
-            <div class="text-xs text-slate-400 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800/80">
-                <p class="font-semibold text-slate-300 mb-1">💡 Quick Tips:</p>
-                <p>• Click or drag across grid cells to paint beads.</p>
-                <p>• Select the white/eraser swatch to clear individual cells.</p>
-            </div>
-        </section>
-
-        <!-- Right Column: Interactive Canvas / Grid -->
-        <section class="lg:col-span-8 flex flex-col items-center justify-center bg-slate-950/80 rounded-xl shadow-lg border border-purple-900/30 p-6">
-            <div class="mb-4 text-center">
-                <h2 class="text-lg font-bold text-slate-100">Pattern Workspace</h2>
-                <p class="text-xs text-slate-400">Click and drag inside the grid to create your bead design.</p>
-            </div>
-
-            <!-- Grid Wrapper -->
-            <div id="gridWrapper" class="overflow-auto max-w-full p-4 bg-slate-900 rounded-lg border border-slate-800 flex justify-center items-center">
-                <!-- Dynamic Grid Rendered Here -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer with Ko-fi Support Link -->
-    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print mt-auto flex flex-col sm:flex-row justify-center items-center gap-2">
-        <span>HandleVault Digital • Free Browser-Based Utility • <a href="mailto:handlevault.digital@proton.me" class="text-cyan-600 hover:underline">handlevault.digital@proton.me</a></span>
-        <span class="hidden sm:inline">•</span>
-        <a href="https://ko-fi.com//Handlevaultofficial" target="_blank" class="inline-flex items-center gap-1 text-pink-600 font-semibold hover:underline">
-            ☕ Support on Ko-fi
-        </a>
-    </footer>
-
-    <!-- JavaScript Logic -->
     <script>
-        const colors = [
-            { name: 'Eraser / Empty', hex: '#1e293b' },
-            { name: 'Pure White', hex: '#ffffff' },
-            { name: 'Jet Black', hex: '#0f172a' },
-            { name: 'Bright Red', hex: '#ef4444' },
-            { name: 'Sunset Orange', hex: '#f97316' },
-            { name: 'Lemon Yellow', hex: '#eab308' },
-            { name: 'Lime Green', hex: '#22c55e' },
-            { name: 'Emerald', hex: '#10b981' },
-            { name: 'Cyan Sky', hex: '#06b6d4' },
-            { name: 'Royal Blue', hex: '#3b82f6' },
-            { name: 'Vibrant Purple', hex: '#a855f7' },
-            { name: 'Hot Pink', hex: '#ec4899' }
-        ];
+        let uploadedImage = null;
 
-        let currentGridSize = 16;
-        let selectedColor = colors[3].hex; // Default Red
-        let selectedColorName = colors[3].name;
-        let gridData = {};
-        let isMouseDown = false;
+        function handleImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-        // Initialize Palette
-        function initPalette() {
-            const container = document.getElementById('paletteContainer');
-            container.innerHTML = '';
-            colors.forEach((c, index) => {
-                const btn = document.createElement('button');
-                btn.className = `w-10 h-10 rounded-lg border-2 transition transform hover:scale-105 shadow-sm ${c.hex === selectedColor ? 'border-white scale-105' : 'border-slate-700'}`;
-                btn.style.backgroundColor = c.hex;
-                btn.title = c.name;
-                btn.onclick = () => selectColor(c.hex, c.name);
-                container.appendChild(btn);
-            });
-        }
-
-        function selectColor(hex, name) {
-            selectedColor = hex;
-            selectedColorName = name;
-            document.getElementById('activeColorPreview').style.backgroundColor = hex;
-            document.getElementById('activeColorName').innerText = name;
-            initPalette();
-        }
-
-        function setGridSize(size) {
-            currentGridSize = size;
-            gridData = {}; // Reset canvas on size change
-            
-            // Update buttons
-            document.querySelectorAll('.grid-size-btn').forEach(btn => {
-                btn.classList.remove('bg-purple-600', 'text-white');
-                btn.classList.add('bg-slate-800', 'text-slate-300');
-            });
-            document.getElementById(`btn-${size}`).classList.remove('bg-slate-800', 'text-slate-300');
-            document.getElementById(`btn-${size}`).classList.add('bg-purple-600', 'text-white');
-
-            renderGrid();
-        }
-
-        function renderGrid() {
-            const wrapper = document.getElementById('gridWrapper');
-            wrapper.innerHTML = '';
-
-            const gridTable = document.createElement('div');
-            gridTable.className = `grid gap-0.5 bg-slate-800 p-2 rounded`;
-            gridTable.style.gridTemplateColumns = `repeat(${currentGridSize}, minmax(0, 1fr))`;
-
-            for (let r = 0; r < currentGridSize; r++) {
-                for (let c = 0; c < currentGridSize; c++) {
-                    const key = `${r}-${c}`;
-                    const cell = document.createElement('div');
-                    cell.className = 'w-5 h-5 sm:w-6 sm:h-6 rounded-sm cursor-pointer transition-colors duration-75 border border-slate-700/40';
-                    cell.style.backgroundColor = gridData[key] || '#1e293b';
-                    
-                    cell.onmousedown = (e) => {
-                        isMouseDown = true;
-                        paintCell(r, c, cell);
-                    };
-                    cell.onmouseover = (e) => {
-                        if (isMouseDown) paintCell(r, c, cell);
-                    };
-
-                    gridTable.appendChild(cell);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    uploadedImage = img;
+                    processBeadPattern();
                 }
+                img.onerror = function() {
+                    alert('Error loading image file.');
+                }
+                img.src = e.target.result;
             }
-
-            wrapper.appendChild(gridTable);
+            reader.readAsDataURL(file);
         }
 
-        function paintCell(r, c, cell) {
-            const key = `${r}-${c}`;
-            // If eraser/empty is selected (#1e293b), delete from state
-            if (selectedColor === '#1e293b') {
-                delete gridData[key];
-                cell.style.backgroundColor = '#1e293b';
-            } else {
-                gridData[key] = selectedColor;
-                cell.style.backgroundColor = selectedColor;
+        function reprocessImage() {
+            if (uploadedImage) {
+                processBeadPattern();
             }
         }
 
-        window.onmouseup = () => {
-            isMouseDown = false;
-        };
+        function processBeadPattern() {
+            if (!uploadedImage) return;
 
-        function clearGrid() {
-            if (confirm('Are you sure you want to clear your current bead pattern?')) {
-                gridData = {};
-                renderGrid();
+            const canvas = document.getElementById('beadCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            const gridSize = parseInt(document.getElementById('gridSizeSelect').value);
+            const paletteMode = document.getElementById('paletteSelect').value;
+
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = gridSize;
+            tempCanvas.height = gridSize;
+
+            tempCtx.imageSmoothingEnabled = false;
+            tempCtx.drawImage(uploadedImage, 0, 0, gridSize, gridSize);
+
+            try {
+                const imgData = tempCtx.getImageData(0, 0, gridSize, gridSize);
+                const data = imgData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    if (paletteMode === 'pastel') {
+                        data[i] = Math.min(255, data[i] + 30);     
+                        data[i+1] = Math.max(0, data[i+1] - 10);  
+                        data[i+2] = Math.min(255, data[i+2] + 40); 
+                    } else if (paletteMode === 'neon') {
+                        data[i] = data[i] > 127 ? 255 : 0;
+                        data[i+1] = data[i+1] > 127 ? 255 : 0;
+                        data[i+2] = data[i+2] > 127 ? 255 : 0;
+                    }
+                }
+                tempCtx.putImageData(imgData, 0, 0);
+            } catch (err) {
+                console.warn("Palette filter skipped.", err);
             }
+
+            const displaySize = 400; 
+            canvas.width = displaySize;
+            canvas.height = displaySize;
+            ctx.imageSmoothingEnabled = false;
+            
+            ctx.drawImage(tempCanvas, 0, 0, gridSize, gridSize, 0, 0, displaySize, displaySize);
+
+            document.getElementById('downloadBtn').style.display = 'block';
         }
 
-        // Initialize App on Load
-        initPalette();
-        renderGrid();
+        function downloadImage() {
+            const canvas = document.getElementById('beadCanvas');
+            try {
+                const link = document.createElement('a');
+                link.download = 'sailor-moon-bead-pattern.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (err) {
+                alert('Download failed due to browser security restrictions.');
+            }
+        }
     </script>
+
 </body>
-</html>
+        </html>
+            
