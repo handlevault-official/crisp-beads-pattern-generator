@@ -625,6 +625,21 @@
       window.addEventListener("resize", resizeCanvas);
       renderPalette();
       generate();
+      });
+
+<footer class="site-footer">
+  <span>© <span id="year"></span> Pixel Studio</span>
+  <a
+    href="https://ko-fi.com/Handlevaultofficial"
+    target="_blank"
+    rel="noopener noreferrer"
+  >☕ Buy me a Ko-fi</a>
+</footer>
+      
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+  
     })();
   </script>
 </body>
