@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beads Pattern Generator — Studio</title>
+  <title>Beads Pattern Studio — Pro Edition</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -25,7 +25,7 @@
     body { background: var(--bg-canvas); color: var(--text-main); padding: 20px 12px; min-height: 100vh; }
 
     .app-container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
       background: var(--surface);
       border-radius: 16px;
@@ -40,7 +40,7 @@
       align-items: center;
       border-bottom: 2px solid var(--primary);
       padding-bottom: 20px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 16px;
     }
@@ -56,6 +56,35 @@
       font-size: 12px;
       color: var(--text-muted);
       margin-top: 2px;
+    }
+
+    /* Progress Tracker Bar */
+    .progress-bar-container {
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .progress-info { font-size: 13px; font-weight: 600; color: var(--text-main); }
+    .progress-track {
+      flex: 1;
+      min-width: 150px;
+      height: 10px;
+      background: var(--border-light);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.3s ease;
     }
 
     .toolbar {
@@ -86,7 +115,7 @@
       color: var(--text-muted);
     }
 
-    select, input[type="color"] {
+    select {
       padding: 8px 12px;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
@@ -115,17 +144,19 @@
     .color-swatch:hover { transform: scale(1.1); }
     .color-swatch.active { border-color: var(--primary); transform: scale(1.15); }
 
-    /* Grid Area */
+    /* Canvas Grid Area with Zoom Support */
     .canvas-wrapper {
       width: 100%;
       overflow: auto;
       background: #fafafa;
       border: 1.5px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 24px;
       display: flex;
       justify-content: center;
+      align-items: center;
       margin-bottom: 24px;
+      min-height: 350px;
     }
 
     .pixel-grid {
@@ -133,6 +164,8 @@
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
+      transition: transform 0.2s ease;
+      transform-origin: center;
     }
 
     .pixel-cell {
@@ -219,19 +252,33 @@
       </div>
     </div>
 
+    <!-- Progress Tracker -->
+    <div class="progress-bar-container">
+      <div class="progress-info" id="progressText">Progress: 0 / 225 beads (0%)</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
     <!-- Color Palette Selection -->
     <div class="palette" id="paletteContainer"></div>
 
-    <!-- Toolbar: Undo/Redo/Clear/Save -->
+    <!-- Toolbar: Zoom, Undo/Redo, Clear, Save -->
     <div class="toolbar">
+      <div class="tool-group">
+        <label>Zoom</label>
+        <button class="btn btn-secondary" onclick="zoomOut()">🔍 -</button>
+        <button class="btn btn-secondary" onclick="resetZoom()">100%</button>
+        <button class="btn btn-secondary" onclick="zoomIn()">🔍 +</button>
+      </div>
       <div class="tool-group">
         <button class="btn btn-secondary" onclick="undo()">↶ Undo</button>
         <button class="btn btn-secondary" onclick="redo()">↷ Redo</button>
         <button class="btn btn-secondary" onclick="clearGrid()">Clear</button>
       </div>
       <div class="tool-group">
-        <button class="btn btn-secondary" onclick="savePattern()">Save Pattern</button>
-        <button class="btn btn-secondary" onclick="loadPattern()">Load Saved</button>
+        <button class="btn btn-secondary" onclick="savePattern()">Save</button>
+        <button class="btn btn-secondary" onclick="loadPattern()">Load</button>
       </div>
     </div>
 
@@ -259,6 +306,7 @@
     let historyStack = [];
     let redoStack = [];
     let isDrawing = false;
+    let currentZoom = 1; // zoom scale multiplier
 
     function initPalette() {
       const container = document.getElementById('paletteContainer');
@@ -302,6 +350,7 @@
         grid.appendChild(cell);
       }
       saveState();
+      updateProgress();
     }
 
     window.onmouseup = () => { isDrawing = false; };
@@ -310,9 +359,10 @@
     function paintCell(index) {
       if (gridData[index] === currentColor) return;
       saveState();
-      redoStack = []; // clear redo on new action
+      redoStack = [];
       gridData[index] = currentColor;
       updateGridVisual();
+      updateProgress();
     }
 
     function updateGridVisual() {
@@ -322,9 +372,44 @@
       }
     }
 
+    function updateProgress() {
+      const total = gridSize * gridSize;
+      // Count cells that are NOT white (#ffffff)
+      const filled = gridData.filter(c => c !== '#ffffff').length;
+      const percent = Math.round((filled / total) * 100);
+      
+      document.getElementById('progressText').innerText = `Progress: ${filled} / ${total} beads (${percent}%)`;
+      document.getElementById('progressFill').style.width = `${percent}%`;
+    }
+
+    /* Zoom Controls */
+    function zoomIn() {
+      if (currentZoom < 2.0) {
+        currentZoom += 0.2;
+        applyZoom();
+      }
+    }
+
+    function zoomOut() {
+      if (currentZoom > 0.6) {
+        currentZoom -= 0.2;
+        applyZoom();
+      }
+    }
+
+    function resetZoom() {
+      currentZoom = 1.0;
+      applyZoom();
+    }
+
+    function applyZoom() {
+      const grid = document.getElementById('pixelGrid');
+      grid.style.transform = `scale(${currentZoom})`;
+    }
+
     function saveState() {
       historyStack.push([...gridData]);
-      if (historyStack.length > 25) historyStack.shift(); // limit history
+      if (historyStack.length > 25) historyStack.shift();
     }
 
     function undo() {
@@ -332,6 +417,7 @@
         redoStack.push(historyStack.pop());
         gridData = [...historyStack[historyStack.length - 1]];
         updateGridVisual();
+        updateProgress();
       }
     }
 
@@ -341,6 +427,7 @@
         historyStack.push(nextState);
         gridData = [...nextState];
         updateGridVisual();
+        updateProgress();
       }
     }
 
@@ -348,12 +435,15 @@
       saveState();
       gridData.fill('#ffffff');
       updateGridVisual();
+      updateProgress();
     }
 
     function changeGridSize() {
       gridSize = parseInt(document.getElementById('gridSize').value);
       historyStack = [];
       redoStack = [];
+      currentZoom = 1.0;
+      applyZoom();
       initGrid();
     }
 
@@ -372,6 +462,8 @@
         gridData = obj.gridData;
         historyStack = [[...gridData]];
         redoStack = [];
+        currentZoom = 1.0;
+        applyZoom();
         
         const grid = document.getElementById('pixelGrid');
         grid.style.gridTemplateColumns = `repeat(${gridSize}, 24px)`;
@@ -385,6 +477,7 @@
           grid.appendChild(cell);
         }
         updateGridVisual();
+        updateProgress();
         alert('Pattern loaded successfully!');
       } else {
         alert('No saved pattern found.');
