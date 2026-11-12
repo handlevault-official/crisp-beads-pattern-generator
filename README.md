@@ -86,21 +86,3 @@ If you encounter any bugs, have feature suggestions, or need assistance, please 
 📧 handlevault.digital@proton.me
 📜 License
 Distributed under the MIT License. See the LICENSE file for more information.
-
----
-
-<TemplateWidget component_placeholder_id="im_cfde6153016121ea" header_title="Pixel Art Converter MVP & Setup Instructions" templateName="checklist">
-```json
-{
-  "categories": ["Repository & Setup", "Core Utility", "Deployment"],
-  "activeCategory": "Deployment",
-  "items": [
-    { "id": "1", "label": "Create GitHub repository with MIT License", "sublines": ["Successfully deployed"], "category": "Repository & Setup", "checked": true },
-    { "id": "2", "label": "Clone repo and setup local Bash environment", "sublines": ["Workspace ready"], "category": "Repository & Setup", "checked": true },
-    { "id": "3", "label": "Add index.html with clean core utility", "sublines": ["Tested and working"], "category": "Core Utility", "checked": true },
-    { "id": "4", "label": "Clean up repository (remove obsolete files)", "sublines": ["Clean codebase"], "category": "Repository & Setup", "checked": true },
-    { "id": "5", "label": "Enable GitHub Pages and update standardized README", "sublines": ["Beads Pattern Studio README completed with Beta status and Support email! All 4 apps are now fully documented!"], "category": "Deployment", "checked": true }
-  ]
-}
-
-</TemplateWidget>
